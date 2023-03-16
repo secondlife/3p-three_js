@@ -32,21 +32,10 @@ build=${AUTOBUILD_BUILD_ID:=0}
 
 cat "${SOURCE_DIR}/package.json" | python3 -c "import sys, json; print (json.load(sys.stdin)['version'])" > "$stage/VERSION.txt"
 
-case "$AUTOBUILD_PLATFORM" in
-    windows* | darwin64)
+mkdir -p "$stage/js"
+mkdir -p "$stage/LICENSES"
 
-        mkdir -p "$stage/js"
-        mkdir -p "$stage/LICENSES"
+cp "${SOURCE_DIR}/src/three.min.js" "$stage/js/"
+cp "${SOURCE_DIR}/src/OrbitControls.js" "$stage/js/"
 
-        cp "${SOURCE_DIR}/src/three.min.js" "$stage/js/"
-        cp "${SOURCE_DIR}/src/OrbitControls.js" "$stage/js/"
-
-        cp "${SOURCE_DIR}/LICENSE.txt" "$stage/LICENSES/THREEJS_LICENSE.txt"
-    ;;
-
-    "linux")
-    ;;
-
-    "linux64")
-    ;;
-esac
+cp "${SOURCE_DIR}/LICENSE.txt" "$stage/LICENSES/THREEJS_LICENSE.txt"
